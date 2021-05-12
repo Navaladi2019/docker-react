@@ -1,0 +1,24 @@
+version: "3"
+
+services: 
+    web:
+        build: 
+            context: .
+            dockerfile: Dockerfile.dev
+        ports: 
+            - "3000:3000"
+        volumes:
+            - /app/node_modules #use the node_module existing in container
+            - .:/app     # use the current  directory and reference all the files except node_module(from previous line)
+
+    test:
+        build: 
+            context: .
+            dockerfile: Dockerfile.dev
+        ports: 
+            - "3000:3000"
+        volumes:
+            - /app/node_modules #use the node_module existing in container
+            - .:/app     # use the current  directory and reference all the files except node_module(from previous line)
+
+        command: ["npm","run","test"]  # overriding the CMD mentioned in docker file.
